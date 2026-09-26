@@ -1,27 +1,4 @@
 import { Link, NavLink, useNavigate } from 'react-router-dom';
 import { useCart } from '../context/CartContext';
 import { useAuth } from '../context/AuthContext';
-
-export default function Navbar({ onSearch }) {
-  const { count } = useCart();
-  const { user, logout } = useAuth();
-  const navigate = useNavigate();
-  return <header className="nav">
-    <div className="nav-inner">
-      <Link to="/" className="brand"><span className="brand-mark">⚡</span><span>Electro<span>Wave</span></span></Link>
-      <nav className="nav-links">
-        <NavLink to="/products">Shop</NavLink>
-        <a href="/#deals">Deals</a>
-        <a href="/#categories">Categories</a>
-      </nav>
-      <form className="search" onSubmit={(e)=>{e.preventDefault(); const q=e.currentTarget.q.value.trim(); onSearch?.(q); navigate(`/products${q ? `?q=${encodeURIComponent(q)}` : ''}`)}}>
-        <span>⌕</span><input name="q" placeholder="Search headphones, watches, laptops..." aria-label="Search products" />
-      </form>
-      <div className="nav-actions">
-        <Link to={user ? '/profile' : '/login'} className="nav-account"><span className="icon">◉</span><span>{user ? (user.name || 'Account') : 'Login'}</span></Link>
-        <Link to="/cart" className="cart-pill"><span>🛒</span><span>Cart</span>{count > 0 && <b>{count}</b>}</Link>
-        {user && <button className="ghost-btn" onClick={()=>{logout(); navigate('/')}}>Logout</button>}
-      </div>
-    </div>
-  </header>
-}
+export default function Navbar({ onSearch }) { const { count }=useCart(); const { user, logout }=useAuth(); const navigate=useNavigate(); return <header className="nav"><div className="nav-inner"><Link to="/" className="brand"><span className="brand-mark">V</span><span>Volt<span>ura</span></span></Link><nav className="nav-links"><NavLink to="/products">Shop</NavLink><a href="/#deals">Deals</a><a href="/#categories">Categories</a></nav><form className="search" onSubmit={e=>{e.preventDefault();const q=e.currentTarget.q.value.trim();onSearch?.(q);navigate(`/products${q?`?q=${encodeURIComponent(q)}`:''}`)}}><span>⌕</span><input name="q" placeholder="Search earbuds, laptops, gaming..." aria-label="Search products"/></form><div className="nav-actions"><Link to={user?'/profile':'/login'} className="nav-account"><span className="icon">◉</span><span>{user?(user.name||'Account'):'Login'}</span></Link><Link to="/cart" className="cart-pill"><span>🛒</span><span>Cart</span>{count>0&&<b>{count}</b>}</Link>{user&&<button className="ghost-btn" onClick={()=>{logout();navigate('/')}}>Logout</button>}</div></div></header> }
